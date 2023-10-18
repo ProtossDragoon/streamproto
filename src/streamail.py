@@ -28,6 +28,7 @@ def is_valid(email: str):
 class SessionEmail():
 
     def __new__(cls, id_: str):
+        # TODO: Add StreamSession class and Inherit it.
         k = f'{id_}_session_state'
         if k not in st.session_state:
             obj = super().__new__(cls)

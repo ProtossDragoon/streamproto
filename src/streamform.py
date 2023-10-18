@@ -10,7 +10,7 @@ import streamail
 from utils import loggerutils
 
 
-loggerutils.set_basic_config(logging.DEBUG)
+# loggerutils.set_basic_config(logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
@@ -21,6 +21,7 @@ class BaseFormState():
         name: str,
         se: streamail.SessionEmail = None
     ):
+        # TODO: Add StreamSession class and Inherit it.
         k = f'{name}_session_state'
         if k not in st.session_state:
             obj = super().__new__(cls)
