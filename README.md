@@ -4,7 +4,7 @@ StreamProto: High-Level Prototyping Component Sets Using Streamlit
 
 ## Requirements
 
-- Python version >= 3.9
+- Python >= 3.9
 - streamlit
 - gspread
 
@@ -50,5 +50,5 @@ streamlit run src/streamsheet.py
 ### Requirements
 
 - Create [Google SpreadSheet](https://docs.google.com/spreadsheets/) named `example-sheet`.
-- Follow ['Enable API Access for a Project'](https://docs.gspread.org/en/v5.10.0/oauth2.html#enable-api-access-for-a-project) steps 1~3 and ['Using Service Account'](https://docs.gspread.org/en/v5.10.0/oauth2.html#for-bots-using-service-account) steps 1~8.
+- Follow ['Enable API Access for a Project'](https://docs.gspread.org/en/v5.10.0/oauth2.html#enable-api-access-for-a-project) steps 1\~3 and ['Using Service Account'](https://docs.gspread.org/en/v5.10.0/oauth2.html#for-bots-using-service-account) steps 1\~8.
 - Download service account json file and rename with `service-account.json`. Move the json file to this directory.
