@@ -10,9 +10,9 @@ StreamProto: High-Level Prototyping Component Sets Using Streamlit
 
 ## Main Features
 
-Streamlit is an excellent web application framework for Python developers, primarily focused on data domain knowledge. However, there exists a gap between simple prototyping for visualization, such as in-house dashboards, and prototyping for public user testing.
+Streamlit is a web application framework for Python developers, designed for data-related tasks. However, there exists a gap between simple prototyping for visualization, such as in-house dashboards, and prototyping for public user testing.
 
-One of the main challenges you'll encounter when developing a basic web service using Streamlit is managing reusable code. The source code can quickly become convoluted and difficult to maintain, largely due to issues with state management.
+A significant challenge in developing a basic web service with Streamlit is managing reusable code. Streamlit has a unique session management design. After every user interaction, Streamlit re-runs Python script files from the top, allowing data editing and frontend component rendering. Source code can become convoluted and challenging to maintain, primarily due to state management issues, without compromising application performance.
 
 The goal of this repository is to provide additional features that minimize the need to delve into JavaScript, HTML, CSS, or backend frameworks unless they are absolutely necessary.
 
