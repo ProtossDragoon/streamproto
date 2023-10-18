@@ -1,9 +1,6 @@
 # External
 import functools
 
-# Project
-import streamsheet
-
 
 def callbacks(fn_list: list):
     def f():
@@ -13,6 +10,7 @@ def callbacks(fn_list: list):
 
 
 def write_json(*args, **kwargs):
+    import streamsheet
     @functools.wraps(streamsheet.write_json)
     def f():
         streamsheet.write_json(*args, **kwargs)
