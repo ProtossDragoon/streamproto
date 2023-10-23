@@ -1,4 +1,4 @@
-# External
+# Built-In
 import logging
 from collections.abc import Callable
 
