@@ -19,7 +19,9 @@ class BaseFormState():
     def __new__(
         cls,
         name: str,
-        se: streamail.SessionEmail = None
+        *args,
+        se: streamail.SessionEmail = None,
+        **kwargs
     ):
         # TODO: Add StreamSession class and Inherit it.
         k = f'{name}_session_state'
