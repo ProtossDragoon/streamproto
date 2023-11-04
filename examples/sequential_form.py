@@ -1,60 +1,16 @@
-# Built-In
-import logging
-from collections.abc import Callable
+import os, sys
+if 'streamproto' not in sys.modules:
+    sys.path.append(os.path.join('..', 'streamproto'))
 
 # Third party
 import streamlit as st
 
 # Project
-import streamail
-from utils import loggerutils
+from streamproto.components import streamform
+from streamproto.components import streamail
 
 
-# loggerutils.set_basic_config(logging.DEBUG)
-logger = logging.getLogger(__name__)
-
-
-class BaseFormState():
-
-    def __new__(
-        cls,
-        name: str,
-        *args,
-        se: streamail.SessionEmail = None,
-        **kwargs
-    ):
-        # TODO: Add StreamSession class and Inherit it.
-        k = f'{name}_session_state'
-        if k not in st.session_state:
-            obj = super().__new__(cls)
-            obj.__init__(name, se)
-            st.session_state[k] = obj
-        return st.session_state[k]
-
-    def __init__(
-        self,
-        name: str,
-        se: streamail.SessionEmail = None
-    ):
-        self.name = name
-        if se is None:
-            se = streamail.SessionEmail(name+'_email')
-        self.se = se
-
-
-def if_valid_email(do_sth: Callable) -> Callable:
-    def f(*args, **kwargs):
-        email = kwargs.pop('email')
-        if streamail.is_valid(email):
-            return do_sth(*args, **kwargs)
-        else:
-            def do_nothing():
-                pass
-            return do_nothing
-    return f
-
-
-class ExampleSequentialFormState(BaseFormState):
+class ExampleSequentialFormState(streamform.BaseFormState):
 
     def __init__(
         self,
@@ -97,7 +53,7 @@ class ExampleSequentialFormState(BaseFormState):
         self.show_q2 = True
         self.finished = False
 
-    @if_valid_email
+    @streamform.if_valid_email
     def state_finished(self):
         self.show_toggle = False
         self.q1_finished = True

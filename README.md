@@ -28,7 +28,7 @@ Key features include:
 ![streamail](./docs/streamail-20f-200p.gif)
 
 ```bash
-streamlit run src/streamail.py
+streamlit run examples/valid_memorized_email.py
 ```
 
 ## streamform
@@ -36,7 +36,7 @@ streamlit run src/streamail.py
 ![streamform](./docs/streamform-20f-200p.gif)
 
 ```bash
-streamlit run src/streamform.py
+streamlit run examples/sequential_form.py
 ```
 
 ## streamsheet
@@ -44,7 +44,7 @@ streamlit run src/streamform.py
 ![streamsheet](./docs/streamsheet-20f-200p.gif)
 
 ```bash
-streamlit run src/streamsheet.py
+streamlit run examples/write_to_sheet.py
 ```
 
 ### Requirements

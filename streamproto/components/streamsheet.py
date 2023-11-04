@@ -3,6 +3,7 @@ import os
 import pytz
 import json
 import logging
+import functools
 import datetime as dt
 
 # Third party
@@ -10,11 +11,11 @@ import streamlit as st
 import gspread
 
 # Project
-import streamsession
-from utils import loggerutils
+from streamproto.core import streamsession
+from streamproto.utils import loggerutils
 
 
-# loggerutils.set_basic_config(logging.INFO)
+loggerutils.set_basic_config(logging.INFO)
 logger = logging.getLogger(__name__)
 
 
@@ -48,6 +49,8 @@ class SessionSheet():
     ) -> None:
         self.file_name = file_name
         assert os.path.isfile(service_account_json)
+        logger.info('Connecting with Spreadsheet API Service')
+        # FIXME: This should not be called multiple times
         self.service_account_json = service_account_json
         self.gc = gspread.service_account(service_account_json)
         self.sheet = self.gc.open(file_name)
@@ -95,62 +98,9 @@ def write_json(
     worksheet.append_row(row)
 
 
-def example(
-    service_account_json: os.PathLike,
-    file_name: str,
-):
-    sheets = {
-        'sheet1': 0,
-        'sheet2': 2,
-        'sheet3': 1,
-    }
-    ss = SessionSheet(
-        file_name,
-        service_account_json,
-        **sheets,
-    )
-    sheet_name = st.selectbox(
-        'Where do you want to write', [
-            k for k in sheets.keys()
-        ]
-    )
-    with st.expander(
-        f'{sheet_name} selected',
-        expanded=True
-    ):
-        q1 = st.selectbox(
-            'What do you want to write', [
-                'hello',
-                'world',
-            ]
-        )
-        q2 = st.text_input(
-            'What do you want to write',
-            value='nothing'
-        )
-        data = {'q1': q1, 'q2': q2}
-        clicked = st.button('write')
-        if clicked:
-            write_json(
-                ss.get_worksheet(sheet_name),
-                timezone='Asia/Seoul',
-                **data
-            )
-            st.write('✅')
-        # NOTE: This is also possible
-        # from utils import callbackutils
-        # clicked = st.button(
-        #     'write',
-        #     on_click=callbackutils.write_json(
-        #         ss.get_worksheet(sheet_name),
-        #         timezone='Asia/Seoul',
-        #         **data
-        #     )
-        # )
-
-
-if __name__ == '__main__':
-    example(
-        'service-account.json',
-        'example-sheet'
-    )
+def callback_write_json(*args, **kwargs):
+    from streamproto.components import streamsheet
+    @functools.wraps(streamsheet.write_json)
+    def f():
+        streamsheet.write_json(*args, **kwargs)
+    return f

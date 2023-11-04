@@ -6,16 +6,16 @@ from typing import Union
 import streamlit as st
 
 # Project
-from streamform import BaseFormState
-from streamoption import Option
-from utils import loggerutils
+from streamproto.core.streamoption import Option
+from streamproto.components import streamform
+from streamproto.utils import loggerutils
 
 
 # loggerutils.set_basic_config(logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
-class DependentSingleOptionManager(BaseFormState):
+class DependentSingleOptionManager(streamform.BaseFormState):
 
     def __init__(
         self,

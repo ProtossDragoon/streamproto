@@ -6,7 +6,7 @@ import logging
 import streamlit as st
 
 # Project
-from utils import loggerutils
+from streamproto.utils import loggerutils
 
 
 # loggerutils.set_basic_config(logging.DEBUG)
@@ -33,13 +33,13 @@ class SessionEmail():
         if k not in st.session_state:
             obj = super().__new__(cls)
             obj.__init__(id_)
+            obj._is_valid = False
             st.session_state[k] = obj
         return st.session_state[k]
 
     def __init__(self, id_: str):
         self.name = id_
         self._email = ''
-        self._is_valid = False
 
     @property
     def is_valid(self):
@@ -68,51 +68,6 @@ class SessionEmail():
                 self.email = st.session_state[text_input_key]
             except InvalidEmailException:
                 pass
+            logger.debug(f'Check the email is valid: {self.is_valid}')
             return self.is_valid
         return f
-
-
-def example():
-    se = SessionEmail('user1')
-    email1 = st.text_input(
-        '[User1] Email input',
-        value=se.email,
-        key='user1_input1',
-        on_change=se.check('user1_input1'),
-        placeholder='example@google.com'
-    )
-
-    if se.is_valid:
-        st.caption('... 👏')
-        se = SessionEmail('user1')
-        email2 = st.text_input(
-            '[User1] Automatically filled Email input',
-            value=se.email,
-            key='user1_input2',
-            on_change=se.check('user1_input2'),
-            placeholder='example@google.com'
-        )
-        if se.is_valid:
-            st.caption('..... 👏')
-        else:
-            st.caption('..... ⛔️ (invalid Email address)')
-
-        se = SessionEmail('user2')
-        email3 = st.text_input(
-            '[User2] Another user\'s Email input',
-            value=se.email,
-            key='user2_input1',
-            on_change=se.check('user2_input1'),
-            placeholder='example@google.com'
-        )
-        if se.is_valid:
-            st.caption('..... 👏')
-        else:
-            st.caption('..... ⛔️ (invalid Email address)')
-
-    else:
-        st.caption('... ⛔️ (invalid Email address)')
-
-
-if __name__ == '__main__':
-    example()
