@@ -32,14 +32,14 @@ class SessionEmail():
         k = f'{id_}_session_state'
         if k not in st.session_state:
             obj = super().__new__(cls)
-            obj.__init__(id_)
             obj._is_valid = False
+            obj._email = ''
             st.session_state[k] = obj
         return st.session_state[k]
 
     def __init__(self, id_: str):
+        # logger.debug('__init__() called.')
         self.name = id_
-        self._email = ''
 
     @property
     def is_valid(self):

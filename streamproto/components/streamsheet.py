@@ -15,7 +15,7 @@ from streamproto.core import streamsession
 from streamproto.utils import loggerutils
 
 
-loggerutils.set_basic_config(logging.INFO)
+# loggerutils.set_basic_config(logging.INFO)
 logger = logging.getLogger(__name__)
 
 
@@ -33,11 +33,6 @@ class SessionSheet():
         if k not in st.session_state:
             logger.info('Creating a new Object')
             obj = super().__new__(cls)
-            obj.__init__(
-                file_name,
-                service_account_json,
-                **worksheets
-            )
             st.session_state[k] = obj
         return st.session_state[k]
 
@@ -47,6 +42,7 @@ class SessionSheet():
         service_account_json: os.PathLike, /,
         **worksheets
     ) -> None:
+        # logger.debug('__init__() called.')
         self.file_name = file_name
         assert os.path.isfile(service_account_json)
         logger.info('Connecting with Spreadsheet API Service')

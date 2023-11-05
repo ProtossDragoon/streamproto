@@ -14,7 +14,7 @@ from streamproto.components import streamail
 logger = logging.getLogger(__name__)
 
 
-class BaseFormState():
+class BaseSessionFormState():
 
     def __new__(
         cls,
@@ -27,7 +27,6 @@ class BaseFormState():
         k = f'{name}_session_state'
         if k not in st.session_state:
             obj = super().__new__(cls)
-            obj.__init__(name, se)
             st.session_state[k] = obj
         return st.session_state[k]
 
@@ -36,6 +35,7 @@ class BaseFormState():
         name: str,
         se: streamail.SessionEmail = None
     ):
+        logger.debug('__init__() called.')
         self.name = name
         if se is None:
             se = streamail.SessionEmail(name+'_email')

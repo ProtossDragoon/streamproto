@@ -10,7 +10,7 @@ from streamproto.components import streamform
 from streamproto.components import streamail
 
 
-class ExampleSequentialFormState(streamform.BaseFormState):
+class ExampleSequentialFormState(streamform.BaseSessionFormState):
 
     def __init__(
         self,
